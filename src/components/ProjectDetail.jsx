@@ -131,7 +131,7 @@ function ProjectDetail({ project, onBack }) {
               {project.images.map((img, i) => (
                 <div key={i} className="bg-white rounded-lg p-4 inline-block">
                   <img 
-                    src={`/${img}`} 
+                    src={`${import.meta.env.BASE_URL}${img}`} 
                     alt={`${project.mainTitle} - ${i + 1}`} 
                     className="max-w-full h-auto object-contain rounded-lg"
                   />

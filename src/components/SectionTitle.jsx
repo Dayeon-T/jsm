@@ -1,4 +1,4 @@
-const starIcon = "/star.svg";
+const starIcon = `${import.meta.env.BASE_URL}star.svg`;
 
 function SectionTitle({ title, isDark = true }) {
   const textColor = isDark ? 'text-white' : 'text-gray-900';
