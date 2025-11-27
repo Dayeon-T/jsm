@@ -1,1 +1,303 @@
 @import "tailwindcss";
+
+/* Pretendard 폰트 (한글 지원) */
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
+
+/* 글자가 아래에서 위로 올라오는 애니메이션 */
+@keyframes slide-up {
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.6s ease-out forwards;
+  opacity: 0;
+}
+
+/* 페이드인 애니메이션 */
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.8s ease-out forwards;
+}
+
+/* 파티클 떠오르는 애니메이션 */
+@keyframes float {
+  0% {
+    transform: translateY(0) translateX(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.1;
+  }
+  90% {
+    opacity: 0.1;
+  }
+  100% {
+    transform: translateY(-100vh) translateX(20px);
+    opacity: 0;
+  }
+}
+
+.animate-float {
+  animation: float linear infinite;
+}
+
+/* 네온 컬러 */
+.text-neon-pink {
+  color: #ff6ec7;
+}
+
+.text-neon-cyan {
+  color: #00f5ff;
+}
+
+.text-neon-green {
+  color: #39ff14;
+}
+
+/* 설명 텍스트 페이드인 */
+.desc-fade-in {
+  opacity: 0;
+  animation: fade-in 1s ease-out 0.5s forwards;
+}
+
+/* 통계 아이템 애니메이션 */
+@keyframes stat-slide-in {
+  0% {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.stat-item {
+  opacity: 0;
+  animation: stat-slide-in 0.6s ease-out forwards;
+}
+
+.stat-item:nth-child(1) {
+  animation-delay: 0.3s;
+}
+
+.stat-item:nth-child(2) {
+  animation-delay: 0.5s;
+}
+
+.stat-item:nth-child(3) {
+  animation-delay: 0.7s;
+}
+
+/* 별 아이콘 hover 회전 */
+@keyframes spin-once {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.hover-spin {
+  transition: transform 1s ease;
+}
+
+.hover-spin:hover {
+  animation: spin-once 1s ease;
+}
+
+/* 그룹 hover 시 회전 (MY SKILLS 전체에 hover하면 별 회전) */
+.group-hover-spin {
+  transition: transform 1s ease;
+}
+
+.group:hover .group-hover-spin {
+  animation: spin-once 1s ease;
+}
+
+/* 스킬 아이콘 스타일 */
+.skill-icon {
+  width: 48px;
+  height: 48px;
+  transition: transform 0.3s ease;
+}
+
+.skill-icon:hover {
+  transform: scale(1.2);
+}
+
+/* GitHub 아이콘 반전 (어두운 배경에서 보이게) */
+.skill-icon.invert {
+  filter: invert(1);
+}
+
+/* 프로젝트 타이틀 hover 시 왼쪽→오른쪽 핑크색 채우기 (다크모드) */
+.title-hover-pink {
+  background: linear-gradient(to right, #ff6ec7 50%, white 50%);
+  background-size: 200% 100%;
+  background-position: right;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: background-position 2.5s ease;
+}
+
+.title-hover-pink:hover {
+  background-position: left;
+}
+
+/* 프로젝트 타이틀 hover 시 왼쪽→오른쪽 핑크색 채우기 (라이트모드) */
+.title-hover-pink-light {
+  background: linear-gradient(to right, #ff6ec7 50%, #1a1a1a 50%);
+  background-size: 200% 100%;
+  background-position: right;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: background-position 2.5s ease;
+}
+
+.title-hover-pink-light:hover {
+  background-position: left;
+}
+
+/* 스크롤 Reveal 애니메이션 */
+@keyframes reveal-up {
+  0% {
+    opacity: 0;
+    transform: translateY(60px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes reveal-left {
+  0% {
+    opacity: 0;
+    transform: translateX(-60px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes reveal-right {
+  0% {
+    opacity: 0;
+    transform: translateX(60px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes reveal-scale {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* 기본 상태 (숨김) */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(60px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.scroll-reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 왼쪽에서 나타남 */
+.scroll-reveal-left {
+  opacity: 0;
+  transform: translateX(-60px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.scroll-reveal-left.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* 오른쪽에서 나타남 */
+.scroll-reveal-right {
+  opacity: 0;
+  transform: translateX(60px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.scroll-reveal-right.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* 스케일 효과 */
+.scroll-reveal-scale {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.scroll-reveal-scale.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* 지연 효과 */
+.delay-100 { transition-delay: 0.1s; }
+.delay-200 { transition-delay: 0.2s; }
+.delay-300 { transition-delay: 0.3s; }
+.delay-400 { transition-delay: 0.4s; }
+.delay-500 { transition-delay: 0.5s; }
+
+/* 기본 body 스타일 */
+body {
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #212121;
+  transition: background-color 0.5s ease;
+}
+
+/* 라이트 모드 */
+html.light body {
+  background-color: #f0ece8;
+}
+
+/* 기본 스크롤바 숨기기 (프로그레스바로 대체) */
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+
+/* Firefox */
+html {
+  scrollbar-width: none;
+}

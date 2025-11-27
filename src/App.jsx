@@ -1,51 +1,109 @@
-import { useState } from 'react'
-import Home from './pages/Home'
-import About from './pages/About'
+import { useState, useEffect } from "react";
+import IntroAnimation from "./components/IntroAnimation";
+import ParticleBackground from "./components/ParticleBackground";
+import ProjectDetail from "./components/ProjectDetail";
+import ScrollProgressBar from "./components/ScrollProgressBar";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+
+// Sections
+import HeroSection from "./sections/HeroSection";
+import AboutSection from "./sections/AboutSection";
+import SkillsSection from "./sections/SkillsSection";
+import ExperienceSection from "./sections/ExperienceSection";
+import AwardsSection from "./sections/AwardsSection";
+import ProjectsSection from "./sections/ProjectsSection";
 
 function App() {
-  const [currentPage, setCurrentPage] = useState('home')
+  const [showIntro, setShowIntro] = useState(true);
+  const [selectedProject, setSelectedProject] = useState(null);
+  const [isDarkMode, setIsDarkMode] = useState(true);
 
-  const renderPage = () => {
-    switch (currentPage) {
-      case 'home':
-        return <Home />
-      case 'about':
-        return <About />
-      default:
-        return <Home />
+  // 테마 변경 시 body 클래스 업데이트
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.remove('light');
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('light');
     }
-  }
+  }, [isDarkMode]);
+
+  const handleIntroComplete = () => {
+    setShowIntro(false);
+  };
+
+  const handleProjectClick = (project) => {
+    setSelectedProject(project);
+  };
+
+  const handleBackFromDetail = () => {
+    setSelectedProject(null);
+  };
+
+  const handleThemeToggle = () => {
+    setIsDarkMode(!isDarkMode);
+  };
 
   return (
-    <div className="w-full min-h-screen flex flex-col bg-gray-900 dark:bg-gray-900">
-      <nav className="flex flex-col md:flex-row justify-center gap-2 md:gap-4 p-6 bg-white/10 dark:bg-white/10 backdrop-blur-lg border-b border-white/10">
-        <button
-          className={`w-full md:w-auto px-6 py-3 text-base font-medium rounded-lg transition-all duration-300 ${
-            currentPage === 'home'
-              ? 'bg-indigo-600 border-2 border-indigo-600 text-white'
-              : 'bg-transparent border-2 border-white/20 text-white/87 hover:bg-white/10 hover:border-white/40 hover:-translate-y-0.5'
-          }`}
-          onClick={() => setCurrentPage('home')}
-        >
-          홈
-        </button>
-        <button
-          className={`w-full md:w-auto px-6 py-3 text-base font-medium rounded-lg transition-all duration-300 ${
-            currentPage === 'about'
-              ? 'bg-indigo-600 border-2 border-indigo-600 text-white'
-              : 'bg-transparent border-2 border-white/20 text-white/87 hover:bg-white/10 hover:border-white/40 hover:-translate-y-0.5'
-          }`}
-          onClick={() => setCurrentPage('about')}
-        >
-          소개
-        </button>
-      </nav>
-      <main className="flex-1 flex items-center justify-center p-8">
-        {renderPage()}
-      </main>
+    <div className={`w-[70%] mx-auto transition-colors duration-500 ${isDarkMode ? '' : 'light-mode'}`}>
+      {/* 플로팅 네비바 */}
+      {!showIntro && !selectedProject && (
+        <Navbar isDark={isDarkMode} onThemeToggle={handleThemeToggle} />
+      )}
+
+      {/* 오른쪽 세로 프로그레스바 */}
+      {!showIntro && !selectedProject && <ScrollProgressBar />}
+
+      {/* 프로젝트 상세 페이지 */}
+      {selectedProject && (
+        <ProjectDetail 
+          project={selectedProject} 
+          onBack={handleBackFromDetail} 
+        />
+      )}
+
+      {showIntro && <IntroAnimation onComplete={handleIntroComplete} />}
+      
+      <div
+        className={`min-h-screen relative transition-colors duration-500 ${
+          isDarkMode ? 'bg-[#212121]' : 'bg-[#f0ece8]'
+        } ${showIntro ? "opacity-0" : "animate-fade-in"}`}
+      >
+        <ParticleBackground />
+        
+        {/* 메인 컨텐츠 - 인트로가 끝난 후에만 렌더링 */}
+        {!showIntro && (
+          <div className="relative z-10 px-8 md:px-16 pt-32 md:pt-40">
+            <HeroSection isDark={isDarkMode} />
+            
+            <div id="about">
+              <AboutSection isDark={isDarkMode} />
+            </div>
+            
+            <div id="skills">
+              <SkillsSection isDark={isDarkMode} />
+            </div>
+            
+            <div id="experience">
+              <ExperienceSection isDark={isDarkMode} />
+            </div>
+            
+            <div id="awards">
+              <AwardsSection isDark={isDarkMode} />
+            </div>
+            
+            <div id="projects">
+              <ProjectsSection onProjectClick={handleProjectClick} isDark={isDarkMode} />
+            </div>
+            
+            <Footer isDark={isDarkMode} />
+          </div>
+        )}
+      </div>
     </div>
-  )
+  );
 }
 
-export default App
-
+export default App;
